@@ -15,10 +15,6 @@ def multiply(a, b):
     return a * b
 
 
-def pow(a, b):
-    return a ** b
-
-
 def float_div(a, b):
     try:
         return a / b
@@ -31,6 +27,10 @@ def int_div(a, b):
         return a // b
     except ValueError as e:
         print(e)
+        
+
+def pow(a, b):
+    return a ** b
 
 
 """Tests"""
@@ -76,6 +76,31 @@ def test_division_by_zero(func):
 @pytest.mark.parametrize("a, b, expected", 
                          [(1, 2, 0),
                           (2, 3, 0),
-                          (4, 2, 2),])
+                          (4, 2, 2)])
 def test_int_div(a, b, expected):
     assert int_div(a, b) == expected
+
+
+@pytest.mark.parametrize("a, b, expected", 
+                         [(1, 2, 1),
+                          (-2, 3, -8),
+                          (-4, 2, 16)])
+def test_pow(a, b, expected):
+    assert pow(a, b) == expected
+
+
+
+@pytest.mark.parametrize("a, b, expected", 
+                         [(1, -2, 1),
+                          (2, -3, 0.125),
+                          (4, -2, 0.0625)])
+def test_pow_negative_exponent(a, b, expected):
+    assert pytest.approx(pow(a, b), rel=0.001, abs=0.0000001) == expected
+
+
+@pytest.mark.parametrize("a, b, expected", 
+                         [(1, 1/2, 1),
+                          (2, 1/3, 1.26),
+                          (4, 1/2, 2)])
+def test_pow_rational_exponent(a, b, expected):
+    assert pytest.approx(pow(a, b), rel=0.001, abs=0.0000001) == expected
