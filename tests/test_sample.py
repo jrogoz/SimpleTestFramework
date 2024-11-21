@@ -62,7 +62,7 @@ def test_multiply(a, b, expected):
                           (2, 3, 0.67),
                           (4, 2, 2.0)])
 def test_float_div(a, b, expected):
-    assert math.isclose(float_div(a, b), expected, rel_tol=0.01, abs_tol=0.0000001) 
+    assert pytest.approx(float_div(a, b), rel=0.01, abs=0.0000001) == expected
 
 @pytest.mark.parametrize("a, b, expected", 
                          [(1, 2, 0),
