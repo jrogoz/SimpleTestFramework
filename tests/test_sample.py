@@ -64,6 +64,15 @@ def test_multiply(a, b, expected):
 def test_float_div(a, b, expected):
     assert pytest.approx(float_div(a, b), rel=0.01, abs=0.0000001) == expected
 
+
+@pytest.mark.parametrize("func", [(float_div), (int_div)])
+def test_division_by_zero(func):
+    with pytest.raises(ZeroDivisionError) as err_info:
+        func(1, 0)
+    assert "division" in str(err_info.value)
+    assert "by zero" in str(err_info.value)
+
+
 @pytest.mark.parametrize("a, b, expected", 
                          [(1, 2, 0),
                           (2, 3, 0),
